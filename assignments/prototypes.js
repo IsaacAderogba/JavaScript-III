@@ -15,31 +15,19 @@
   * dimensions (These represent the character's size in the video game)
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
-function GameObject({createdAt, name, dimensions: {length, width, height}}) {
+function GameObject({createdAt, name, dimensions}) {
   this.createdAt = createdAt;
   this.name = name;
   this.dimensions = {
-    length: length,
-    width: width,
-    height: height
+    length: dimensions.length,
+    width: dimensions.width,
+    height: dimensions.height
   }
 }
 
 GameObject.prototype.destroy = function() {
   return `${this.name} was removed from the game.`;
 }
-
-// Early Testing
-// const mage = new GameObject({createdAt: new Date(), name: "Mage", dimensions: {
-//   length: 2,
-//   width: 1,
-//   height: 1
-// }});
-
-// // const mage = new GameObject(new Date(), "Mage", 2, 1, 1);
-
-// console.log(mage.createdAt);
-// console.log(mage.destroy()); 
 
 /*
   === CharacterStats ===
@@ -48,8 +36,8 @@ GameObject.prototype.destroy = function() {
   * should inherit destroy() from GameObject's prototype
 */
 
-function CharacterStats({createdAt, name, dimensions: {length, width, height}, healthPoints}) {
-  GameObject.call(this, {createdAt, name, dimensions: {length, width, height}});
+function CharacterStats({createdAt, name, dimensions, healthPoints}) {
+  GameObject.call(this, {createdAt, name, dimensions});
   this.healthPoints = healthPoints;
 }
 
@@ -58,23 +46,6 @@ CharacterStats.prototype = Object.create(GameObject.prototype);
 CharacterStats.prototype.takeDamage = function() {
   return `${this.name} took damage.`
 }
-
-// Extra Testing
-// const mage = new CharacterStats({
-//   createdAt: new Date(),
-//   dimensions: {
-//     length: 2,
-//     width: 1,
-//     height: 1,
-//   },
-//   healthPoints: 5,
-//   name: "Isaac"
-// });
-
-// console.log(mage.createdAt);
-// console.log(mage.name);
-// console.log(mage.destroy());
-// console.log(mage.takeDamage());
 
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
@@ -86,8 +57,8 @@ CharacterStats.prototype.takeDamage = function() {
   * should inherit takeDamage() from CharacterStats
 */
 
-function Humanoid({createdAt, name, dimensions: {length, width, height}, healthPoints, team, language, weapons}) {
-  CharacterStats.call(this, {createdAt, name, dimensions: {length, width, height}, healthPoints})
+function Humanoid({createdAt, name, dimensions, healthPoints, team, language, weapons}) {
+  CharacterStats.call(this, {createdAt, name, dimensions, healthPoints, healthPoints})
   this.team = team;
   this.language = language;
   this.weapons = weapons;
@@ -171,14 +142,14 @@ Humanoid.prototype.greet = function() {
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
-function Hero({createdAt, name, dimensions: {length, width, height}, healthPoints, team, language, weapons}) {
-  Humanoid.call(this, {createdAt, name, dimensions: {length, width, height}, healthPoints, team, language, weapons})
+function Hero({createdAt, name, dimensions, healthPoints, team, language, weapons}) {
+  Humanoid.call(this, {createdAt, name, dimensions, healthPoints, team, language, weapons})
 }
 
 Hero.prototype = Object.create(Humanoid.prototype);
 
-function Villain({createdAt, name, dimensions: {length, width, height}, healthPoints, team, language, weapons}) {
-  Humanoid.call(this, {createdAt, name, dimensions: {length, width, height}, healthPoints, team, language, weapons})
+function Villain({createdAt, name, dimensions, healthPoints, team, language, weapons}) {
+  Humanoid.call(this, {createdAt, name, dimensions, healthPoints, team, language, weapons})
 }
 
 Villain.prototype = Object.create(Humanoid.prototype);
