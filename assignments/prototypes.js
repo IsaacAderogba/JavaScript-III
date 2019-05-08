@@ -177,11 +177,95 @@ function Hero({createdAt, name, dimensions: {length, width, height}, healthPoint
 
 Hero.prototype = Object.create(Humanoid.prototype);
 
-function Villian({createdAt, name, dimensions: {length, width, height}, healthPoints, team, language, weapons}) {
+function Villain({createdAt, name, dimensions: {length, width, height}, healthPoints, team, language, weapons}) {
   Humanoid.call(this, {createdAt, name, dimensions: {length, width, height}, healthPoints, team, language, weapons})
 }
 
-Villian.prototype = Object.create(Humanoid.prototype);
+Villain.prototype = Object.create(Humanoid.prototype);
 
   // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
+Hero.prototype.righteousAttack = function(villain) {
+  let damage = 3;
+  villain.loseHealthPoints(damage);
+}
+
+Hero.prototype.loseHealthPoints = function(pointsDamage) {
+  this.healthPoints = this.healthPoints - pointsDamage;
+  console.log(`${this.name} took ${pointsDamage} damage`);
+  this.isDestroyed();
+}
+
+Hero.prototype.isDestroyed = function() {
+  if(this.healthPoints <= 0){
+    console.log(`${this.name} has been destroyed`);
+  }
+  console.log(`${this.name} has ${this.healthPoints} health remaining`);
+}
+
+
+Villain.prototype.barbaricAttack = function(hero) {
+  let damage = 5;
+  hero.loseHealthPoints(damage);
+}
+
+Villain.prototype.loseHealthPoints = function(pointsDamage) {
+  this.healthPoints = this.healthPoints - pointsDamage;
+  console.log(`${this.name} took ${pointsDamage} damage`);
+  this.isDestroyed();
+}
+
+Villain.prototype.isDestroyed = function() {
+  if(this.healthPoints <= 0){
+    console.log(`${this.name} has been destroyed`);
+  }
+  console.log(`${this.name} has ${this.healthPoints} health remaining`);
+}
+
   // * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+  // Create hero object
+  const hero = new Hero({
+    createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 2,
+      height: 4,
+    },
+    healthPoints: 10,
+    name: 'Good Hero',
+    team: 'Forest Kingdom',
+    weapons: [
+      'Bow',
+      'Dagger',
+    ],
+    language: 'Elvish',
+  });
+
+  // create villain object
+  const villain = new Villain({
+    createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 2,
+      height: 4,
+    },
+    healthPoints: 15,
+    name: 'Evil Villain',
+    team: 'The Round Table',
+    weapons: [
+      'Giant Sword',
+      'Shield',
+    ],
+    language: 'Common Tongue',
+  });
+
+  console.log("\n*** FIGHT! ***")
+  console.log("Hero starting health points: ", hero.healthPoints); // 10 starting points
+  console.log("Villain starting health points: ", villain.healthPoints); // 15 starting points
+
+  hero.righteousAttack(villain); // villain takes 3 damage, has 12 health left
+  hero.righteousAttack(villain); // villain takes 3 damage, has 9 health left
+  villain.barbaricAttack(hero); // hero takes 5 damage, has 5 health left
+  hero.righteousAttack(villain); // villain takes 3 damage, has 6 health left
+  hero.righteousAttack(villain); // villain takes  3 damage, has 3 health left
+  villain.barbaricAttack(hero); // hero takes 5 damage, has 5 health left, and is thus destroyed
