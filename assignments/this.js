@@ -23,18 +23,53 @@
 // Principle 1
 
 // code example for Window Binding
+console.log("*** Principle 1 ***");
 function helloWorld() {
     console.log("This is this -> ", this);
 }
+helloWorld();
 
 // Principle 2
 
 // code example for Implicit Binding
+console.log("\n*** Principle 2 ***");
+
+const objectPreceedingDot = {
+    name: "Object Preceeding the Dot",
+    greetCaller() {
+        console.log(`Hi there, my name is ${this.name}`)
+    }
+}
+
+objectPreceedingDot.greetCaller();
 
 // Principle 3
 
 // code example for New Binding
+console.log("\n*** Principle 3 ***");
+
+function Animal(animalName, animalType) {
+    this.name = animalName;
+    this.type = animalType;
+    this.greet = function() {
+        return `Hi, my name is ${this.name} and I am of type ${this.type}`;
+    }
+}
+
+const ray = new Animal("Ray", "Dog");
+ray.greet();
 
 // Principle 4
+console.log("\n*** Principle 4 ***");
+
+const emma = new Animal("Emma", "Bird");
+console.log("\n*** Without Explicit Binding ***");
+console.log("ray.greet() => ", ray.greet());
+console.log("emma.greet() => ", emma.greet());
+
+console.log("\n*** With Explicit Binding ***");
+console.log("ray.greet().call(emma) => ", ray.greet.call(emma));
+console.log("emma.greet().apply(ray) => ", emma.greet.apply(ray));
+
 
 // code example for Explicit Binding
