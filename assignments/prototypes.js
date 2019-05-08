@@ -29,8 +29,7 @@ GameObject.prototype.destroy = function() {
   return `${this.name} was removed from the game.`;
 }
 
-
-// // Tests
+// Early Testing
 // const mage = new GameObject({createdAt: new Date(), name: "Mage", dimensions: {
 //   length: 2,
 //   width: 1,
@@ -39,10 +38,8 @@ GameObject.prototype.destroy = function() {
 
 // // const mage = new GameObject(new Date(), "Mage", 2, 1, 1);
 
-
-// console.log(mage.createdAt); // Today's date
-// console.log(mage.destroy()); // Bruce
-
+// console.log(mage.createdAt);
+// console.log(mage.destroy()); 
 
 /*
   === CharacterStats ===
@@ -50,6 +47,36 @@ GameObject.prototype.destroy = function() {
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
 */
+
+function CharacterStats({createdAt, name, dimensions: {length, width, height}, healthPoints}) {
+  GameObject.call(this, {createdAt, name, dimensions: {length, width, height}});
+  this.healthPoints = healthPoints;
+}
+
+CharacterStats.prototype = Object.create(GameObject.prototype);
+
+CharacterStats.prototype.takeDamage = function() {
+  return `${this.name} took damage.`
+}
+
+// Extra Testing
+// const mage = new CharacterStats({
+//   createdAt: new Date(),
+//   dimensions: {
+//     length: 2,
+//     width: 1,
+//     height: 1,
+//   },
+//   healthPoints: 5,
+//   name: "Isaac"
+// });
+
+// console.log(mage.createdAt);
+// console.log(mage.name);
+// console.log(mage.destroy());
+// console.log(mage.takeDamage());
+
+
 
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
