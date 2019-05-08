@@ -15,6 +15,34 @@
   * dimensions (These represent the character's size in the video game)
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
+function GameObject({createdAt, name, dimensions: {length, width, height}}) {
+  this.createdAt = createdAt;
+  this.name = name;
+  this.dimensions = {
+    length: length,
+    width: width,
+    height: height
+  }
+}
+
+GameObject.prototype.destroy = function() {
+  return `${this.name} was removed from the game.`;
+}
+
+
+// // Tests
+// const mage = new GameObject({createdAt: new Date(), name: "Mage", dimensions: {
+//   length: 2,
+//   width: 1,
+//   height: 1
+// }});
+
+// // const mage = new GameObject(new Date(), "Mage", 2, 1, 1);
+
+
+// console.log(mage.createdAt); // Today's date
+// console.log(mage.destroy()); // Bruce
+
 
 /*
   === CharacterStats ===
