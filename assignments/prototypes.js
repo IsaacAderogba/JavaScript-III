@@ -15,14 +15,10 @@
   * dimensions (These represent the character's size in the video game)
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
-function GameObject({createdAt, name, dimensions}) {
-  this.createdAt = createdAt;
-  this.name = name;
-  this.dimensions = {
-    length: dimensions.length,
-    width: dimensions.width,
-    height: dimensions.height
-  }
+function GameObject(object) {
+  this.createdAt = object.createdAt;
+  this.name = object.name;
+  this.dimensions = object.dimensions;
 }
 
 GameObject.prototype.destroy = function() {
@@ -36,9 +32,9 @@ GameObject.prototype.destroy = function() {
   * should inherit destroy() from GameObject's prototype
 */
 
-function CharacterStats({createdAt, name, dimensions, healthPoints}) {
-  GameObject.call(this, {createdAt, name, dimensions});
-  this.healthPoints = healthPoints;
+function CharacterStats(object) {
+  GameObject.call(this, object);
+  this.healthPoints = object.healthPoints;
 }
 
 CharacterStats.prototype = Object.create(GameObject.prototype);
@@ -57,11 +53,11 @@ CharacterStats.prototype.takeDamage = function() {
   * should inherit takeDamage() from CharacterStats
 */
 
-function Humanoid({createdAt, name, dimensions, healthPoints, team, language, weapons}) {
-  CharacterStats.call(this, {createdAt, name, dimensions, healthPoints, healthPoints})
-  this.team = team;
-  this.language = language;
-  this.weapons = weapons;
+function Humanoid(object) {
+  CharacterStats.call(this, object)
+  this.team = object.team;
+  this.language = object.language;
+  this.weapons = object.weapons;
 }
 
 Humanoid.prototype = Object.create(CharacterStats.prototype);
@@ -142,14 +138,14 @@ Humanoid.prototype.greet = function() {
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
-function Hero({createdAt, name, dimensions, healthPoints, team, language, weapons}) {
-  Humanoid.call(this, {createdAt, name, dimensions, healthPoints, team, language, weapons})
+function Hero(object) {
+  Humanoid.call(this, object)
 }
 
 Hero.prototype = Object.create(Humanoid.prototype);
 
-function Villain({createdAt, name, dimensions, healthPoints, team, language, weapons}) {
-  Humanoid.call(this, {createdAt, name, dimensions, healthPoints, team, language, weapons})
+function Villain(object) {
+  Humanoid.call(this, object)
 }
 
 Villain.prototype = Object.create(Humanoid.prototype);
